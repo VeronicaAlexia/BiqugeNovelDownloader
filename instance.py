@@ -9,19 +9,6 @@ class Vars:
     epub_info = None
 
 
-class Msg:
-    msg_help = [
-        '输入指令\nd | bookid\t\t\t\t\t———输入书籍序号下载单本小说',
-        's | search-book\t\t\t\t\t———下载单本小说',
-        'h | help\t\t\t\t\t———获取使用程序帮助',
-        'q | quit\t\t\t\t\t———退出运行的程序',
-        'p | thread-max\t\t\t\t\t———改变线程数目',
-        'u | update\t\t\t\t\t———下载指定文本中的book-id '
-    ]
-    msg_agree_terms = "是否以仔细阅读且同意LICENSE中叙述免责声明" \
-                      "如果同意声明，请输入英文 \"yes\" 或者中文 \"同意\" 后按Enter建，如果不同意请关闭此程式"
-
-
 def novel_id_url(novel_id: int) -> str:
     return "{}/{}".format(int(int(novel_id) / 1000) + 1, novel_id)
 
@@ -96,3 +83,37 @@ def setup_config():
         else:
             mkdir(Vars.cfg.data.get('save_book'))
             mkdir(Vars.cfg.data.get('config_book'))
+
+
+class Msg:
+    msg_help = [
+        '输入指令\nd | bookid\t\t\t\t\t———输入书籍序号下载单本小说',
+        's | search-book\t\t\t\t\t———下载单本小说',
+        'h | help\t\t\t\t\t———获取使用程序帮助',
+        'q | quit\t\t\t\t\t———退出运行的程序',
+        'p | thread-max\t\t\t\t\t———改变线程数目',
+        'u | update\t\t\t\t\t———下载指定文本中的book-id '
+    ]
+    msg_agree_terms = "是否以仔细阅读且同意LICENSE中叙述免责声明" \
+                      "如果同意声明，请输入英文 \"yes\" 或者中文 \"同意\" 后按Enter建，如果不同意请关闭此程式"
+
+    msg_user_agent = [
+        "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2226.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 6.4; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2225.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2225.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2224.3 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 4.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36",
+        "Mozilla/5.0 (X11; OpenBSD i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.3319.102 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2309.372 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1866.237 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/4E423F",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.517 Safari/537.36",
+    ]
