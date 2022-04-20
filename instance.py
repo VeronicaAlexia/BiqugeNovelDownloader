@@ -18,7 +18,7 @@ class Msg:
         'p | thread-max\t\t\t\t\t———改变线程数目',
         'u | update\t\t\t\t\t———下载指定文本中的book-id '
     ]
-    msg_agree_terms = "是否以仔细阅读且同意LICENSE中叙述免责声明"\
+    msg_agree_terms = "是否以仔细阅读且同意LICENSE中叙述免责声明" \
                       "如果同意声明，请输入英文 \"yes\" 或者中文 \"同意\" 后按Enter建，如果不同意请关闭此程式"
 
 

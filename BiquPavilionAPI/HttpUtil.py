@@ -31,14 +31,14 @@ def headers():
     }
 
 
-def get(api_url: str, params=None, max_retry=10, **kwargs):
+def get(api_url: str, params=None, max_retry=4, **kwargs):
     for retry in range(max_retry):
         try:
             response = requests.get(api_url, headers=headers(), params=params, **kwargs)
             response.encoding = 'utf-8-sig'
             if response.status_code == 200:
                 return response
-            print("status_code:", response.status_code)
+            print("error status_code:{}\n".format(response.status_code))
         except requests.exceptions.RequestException as error:
             if retry >= 2:
                 print("\nGet url:{} Error:{}".format(api_url, error))
