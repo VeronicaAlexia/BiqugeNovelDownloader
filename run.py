@@ -6,8 +6,8 @@ from instance import *
 
 def agreed_read_readme():
     if Vars.cfg.data.get('Disclaimers') != 'yes':
-        print(Vars.cfg.data.get('agree_terms'))
-        confirm = inputs_('>').strip()
+        print(Msg.msg_agree_terms)
+        confirm = input_str('>').strip()
         if confirm == 'yes' or confirm == '同意':
             Vars.cfg.data['Disclaimers'] = 'yes'
             Vars.cfg.save()
@@ -100,6 +100,6 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         shell(sys.argv[1:])
     else:
-        print(Vars.cfg.data.get('help'))
+        print('\n'.join(Msg.msg_help))
         while True:
-            shell(re.split('\\s+', inputs_('>').strip()))
+            shell(re.split('\\s+', input_str('>').strip()))

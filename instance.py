@@ -9,6 +9,19 @@ class Vars:
     epub_info = None
 
 
+class Msg:
+    msg_help = [
+        '输入指令\nd | bookid\t\t\t\t\t———输入书籍序号下载单本小说',
+        's | search-book\t\t\t\t\t———下载单本小说',
+        'h | help\t\t\t\t\t———获取使用程序帮助',
+        'q | quit\t\t\t\t\t———退出运行的程序',
+        'p | thread-max\t\t\t\t\t———改变线程数目',
+        'u | update\t\t\t\t\t———下载指定文本中的book-id '
+    ]
+    msg_agree_terms = "是否以仔细阅读且同意LICENSE中叙述免责声明"\
+                      "如果同意声明，请输入英文 \"yes\" 或者中文 \"同意\" 后按Enter建，如果不同意请关闭此程式"
+
+
 def novel_id_url(novel_id: int) -> str:
     return "{}/{}".format(int(int(novel_id) / 1000) + 1, novel_id)
 
@@ -31,7 +44,7 @@ def isCN(book_name):
     return 40 - cn_no
 
 
-def inputs_(prompt, default=None):
+def input_str(prompt, default=None):
     while True:
         ret = input(prompt)
         if ret != '':
@@ -42,13 +55,7 @@ def inputs_(prompt, default=None):
 
 def del_title(title: str):
     """删去windowns不规范字符"""
-    title = title.replace("\x06", "").replace("\x05", "").replace("\x07", "")
-    return re.sub(r'[？?。*|“<>:/\\]', '', title)
-
-
-def content_(content: str):
-    return ''.join([re.sub(r'^\s*', "\n　　", content)
-                    for content in content.split("\n") if re.search(r'\S', content) is not None])
+    return re.sub(r'[？?。*|“<>:/\\]', '', title.replace("\x06", "").replace("\x05", "").replace("\x07", ""))
 
 
 def write(path: str, mode: str, info=None):
@@ -80,18 +87,6 @@ def setup_config():
         config_change = True
     if type(Vars.cfg.data.get('Disclaimers')) is not str or Vars.cfg.data.get('Disclaimers') == "":
         Vars.cfg.data['Disclaimers'] = 'No'
-        config_change = True
-    if type(Vars.cfg.data.get('agree_terms')) is not str or Vars.cfg.data.get('agree_terms') == "":
-        Vars.cfg.data['agree_terms'] = '是否以仔细阅读且同意LICENSE中叙述免责声明\n如果同意声明，请输入英文 \"yes\" 或者中文 \"同意\" 后按Enter建，如果不同意请关闭此程式'
-        config_change = True
-    if type(Vars.cfg.data.get('show_book_info')) is not str or Vars.cfg.data.get('show_book_info') == "":
-        Vars.cfg.data['show_book_info'] = '书名:{}\n作者:{}\n状态:{}\n字数:{}\n更新:{}\n标签:{}\n最后更新章节:{}\n简介信息\n{}'
-        config_change = True
-    if type(Vars.cfg.data.get('help')) is not str or Vars.cfg.data.get('help') == "":
-        Vars.cfg.data['help'] = 'https://m.aixdzs.com/\nd | bookid\t\t\t\t\t———输入书籍序号下载单本小说\nt | ' \
-                                'tagid\t\t\t\t\t———输入分类号批量下载分类小说\nn | bookname\t\t\t\t\t———下载单本小说\nh | ' \
-                                'help\t\t\t\t\t———获取使用程序帮助\nq | quit\t\t\t\t\t———退出运行的程序\nm | method\t\t\t\t\t———切换多线程和多进程\np | ' \
-                                'pool\t\t\t\t\t———改变线程数目\nu | updata\t\t\t\t\t———下载指定文本中的bookid '
         config_change = True
 
     if config_change:
