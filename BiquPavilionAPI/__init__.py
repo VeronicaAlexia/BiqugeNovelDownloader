@@ -19,9 +19,15 @@ class Book:
     @staticmethod
     def catalogue(novel_id: str):
         response = get("https://infosxs.pigqq.com/BookFiles/Html/{}/index.html".format(novel_id))
-
         if response.get('status') == 1 and response.get('info') == 'success':
             return response.get('data').get('list')
+
+    @staticmethod
+    def search(book_name: str, page: int = 1):
+        params = {"key": book_name, "page": page, "siteid": "app2"}
+        response = get("https://souxs.pigqq.com/search.aspx", params=params)
+        if response.get('status') == 1 and response.get('info') == 'success':
+            return response.get('data')
 
 
 class Chapter:

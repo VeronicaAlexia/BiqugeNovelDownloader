@@ -35,15 +35,21 @@ def shell_book(inputs):  # 通过小说ID下载单本小说
         print('未输入Book-id')
 
 
-# def shell_search_book(inputs):
-#     if len(inputs) >= 2:
-#         start = time.time()
-#         response = BiquPavilionAPI.Book.search_book(inputs[1])
-#         for index, books in enumerate(response):
-#             shell_book([index, books.get('_id')])
-#         print(f'下载耗时:{round(time.time() - start, 2)} 秒')
-#     else:
-#         print('未输入书名')
+def shell_search_book(inputs):
+    if len(inputs) >= 2:
+        response = BiquPavilionAPI.Book.search(inputs[1])
+        for index, books in enumerate(response):
+            Vars.book_info = book.Book(books)
+            makedirs(Vars.cfg.data.get('save_book') + "/" + Vars.book_info.book_name)
+            print("开始下载《{}》\n{}".format(Vars.book_info.book_name, Vars.book_info.show_book_info()))
+            Vars.epub_info = epub.EpubFile()
+            Vars.epub_info.add_intro()
+            makedirs(Vars.book_info.config_book_dir)
+            Vars.book_info.download_chapter_threading()
+            Vars.book_info.output_text_and_epub()
+            print("《{}》下载完成".format(Vars.book_info.book_name))
+    else:
+        print('未输入书名')
 
 
 def get_pool(inputs):
@@ -80,6 +86,8 @@ def shell(inputs: list):
         shell_book(inputs)
     elif choice == 'u' or choice == 'update':
         shell_list(inputs)
+    elif choice == 's' or choice == 'search':
+        shell_search_book(inputs)
     elif choice == 'p' or choice == 'pool':
         get_pool(inputs)
     else:

@@ -27,8 +27,9 @@ class EpubFile:
         self.EpubList.append(write_intro)
 
     def cover(self):
-        cover_url = "https://imgapixs.pigqq.com/BookFiles/BookImages/" + Vars.book_info.cover_url
-        cover_jpg = BiquPavilionAPI.Cover.download_cover(cover_url)
+        if "http" not in Vars.book_info.cover_url:
+            Vars.book_info.cover_url = "https://imgapixs.pigqq.com/BookFiles/BookImages/" + Vars.book_info.cover_url
+        cover_jpg = BiquPavilionAPI.Cover.download_cover(Vars.book_info.cover_url)
         self.epub.set_cover(Vars.book_info.book_name + '.png', cover_jpg)
 
     def add_chapter(self, chapter_id: str, chapter_title: str, content: str, serial_number: str):
