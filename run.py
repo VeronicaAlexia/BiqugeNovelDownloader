@@ -15,7 +15,7 @@ def agreed_read_readme():
             sys.exit()
 
 
-def shell_book(inputs):  # 通过小说ID下载单本小说
+def shell_book(inputs: list):  # 通过小说ID下载单本小说
     if len(inputs) >= 2:
         response = BiquPavilionAPI.Book.novel_info(novel_id_url(inputs[1]))
         if response is not None and isinstance(response, dict):
@@ -27,7 +27,6 @@ def shell_book(inputs):  # 通过小说ID下载单本小说
         else:
             print("获取书籍信息失败，请检查id或者重新尝试！")
             return False
-        makedirs(Vars.book_info.config_book_dir)
         Vars.book_info.download_chapter_threading()
         Vars.book_info.output_text_and_epub()
         print("《{}》下载完成".format(Vars.book_info.book_name))
@@ -35,16 +34,16 @@ def shell_book(inputs):  # 通过小说ID下载单本小说
         print('未输入Book-id')
 
 
-def shell_search_book(inputs):
+def shell_search_book(inputs: list):
     if len(inputs) >= 2:
         response = BiquPavilionAPI.Book.search(inputs[1])
         for index, books in enumerate(response):
             Vars.book_info = book.Book(books)
             makedirs(Vars.cfg.data.get('save_book') + "/" + Vars.book_info.book_name)
             print("开始下载《{}》\n{}".format(Vars.book_info.book_name, Vars.book_info.show_book_info()))
+            # if Vars.cfg.data.get('download_epub'):
             Vars.epub_info = epub.EpubFile()
             Vars.epub_info.add_intro()
-            makedirs(Vars.book_info.config_book_dir)
             Vars.book_info.download_chapter_threading()
             Vars.book_info.output_text_and_epub()
             print("《{}》下载完成".format(Vars.book_info.book_name))
@@ -52,7 +51,7 @@ def shell_search_book(inputs):
         print('未输入书名')
 
 
-def get_pool(inputs):
+def get_pool(inputs: list):
     if len(inputs) >= 2:
         if inputs[1].isdigit():
             Vars.cfg.data['threading_pool_size'] = int(inputs[1])
@@ -63,10 +62,10 @@ def get_pool(inputs):
         print("默认线程为", Vars.cfg.data.get('threading_pool_size'))
 
 
-def shell_list(inputs):
-    start = time.time()
+def shell_list(inputs: list):
     list_file_name = inputs[1] + '.txt' if len(inputs) >= 2 else 'list.txt'
     try:
+        start = time.time()
         list_file_input = open(list_file_name, 'r', encoding='utf-8')
         book_list = [line for line in list_file_input.readlines() if re.match("^\\s*([0-9]{1,7}).*$", line)]
         for book_id in book_list:

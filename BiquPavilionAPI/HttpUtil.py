@@ -3,8 +3,6 @@ import functools
 from instance import *
 from random import choice
 
-session = requests.session()
-
 
 def MaxRetry(func, max_retry=5):
     @functools.wraps(func)
@@ -28,6 +26,7 @@ def headers():
         "Accept-Encoding": "gzip",
         'User-Agent': choice(Msg.msg_user_agent)
     }
+
 
 def get(api_url: str, params=None, max_retry=4, **kwargs):
     for retry in range(max_retry):

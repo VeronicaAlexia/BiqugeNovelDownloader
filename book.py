@@ -30,6 +30,7 @@ class Book:
         self.config_book_dir = os.path.join(Vars.cfg.data.get('config_book'), self.book_name)
         self.save_book_dir = os.path.join(Vars.cfg.data.get('save_book'), self.book_name, f'{self.book_name}.txt')
         write(self.save_book_dir, 'w', '{}简介:\n{}'.format(show_info, self.arrange(self.book_intro, intro=True)))
+        makedirs(self.config_book_dir)
         return show_info
 
     def progress(self, length: int) -> None:
