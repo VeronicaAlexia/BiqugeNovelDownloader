@@ -1,8 +1,7 @@
-import json
 import requests
-from instance import *
 import functools
-from fake_useragent import UserAgent
+from instance import *
+from random import choice
 
 session = requests.session()
 
@@ -27,9 +26,8 @@ def headers():
         "Connection": "Keep-Alive",
         "Cache-Control": "no-cache",
         "Accept-Encoding": "gzip",
-        'User-Agent': UserAgent(verify_ssl=False).random,
+        'User-Agent': choice(Msg.msg_user_agent)
     }
-
 
 def get(api_url: str, params=None, max_retry=4, **kwargs):
     for retry in range(max_retry):
