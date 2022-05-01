@@ -15,14 +15,16 @@ class EpubFile:
 
     def add_intro(self):
         write_intro = epub.EpubHtml(title='简介信息', file_name='0000-000000-intro.xhtml', lang='zh-CN')
-        write_intro.content = '<html><head></head><body><h1>简介</h1>'
-        write_intro.content += '<p>书籍书名:{}</p><p>书籍序号:{}</p>'.format(
-            Vars.book_info.book_name, Vars.book_info.book_id)
-        write_intro.content += '<p>书籍作者:{}</p><p>更新时间:{}</p>'.format(
-            Vars.book_info.author_name, Vars.book_info.book_updated)
-        write_intro.content += '<p>最新章节:{}</p><p>系统标签:{}</p>'.format(
-            Vars.book_info.last_chapter, Vars.book_info.book_tag)
-        write_intro.content += '<p>简介信息:</p>{}</body></html>'.format(Vars.book_info.book_intro)
+        content = '<html><head></head><body><h1>简介</h1>'
+        content += '<p>书籍书名:{}</p><p>书籍序号:{}</p>'
+        content += '<p>书籍作者:{}</p><p>更新时间:{}</p>'
+        content += '<p>最新章节:{}</p><p>系统标签:{}</p>'
+        content += '<p>简介信息:</p>{}</body></html>'
+        write_intro.content = content.format(
+            Vars.book_info.book_name, Vars.book_info.book_id,
+            Vars.book_info.author_name, Vars.book_info.book_updated,
+            Vars.book_info.last_chapter, Vars.book_info.book_tag, Vars.book_info.book_intro
+        )
         self.epub.add_item(write_intro)
         self.EpubList.append(write_intro)
 

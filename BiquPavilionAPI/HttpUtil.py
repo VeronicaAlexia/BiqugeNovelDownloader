@@ -20,7 +20,6 @@ def MaxRetry(func, max_retry=5):
 
 def headers():
     return {
-        "Host": "infosxs.pigqq.com",
         "Connection": "Keep-Alive",
         "Cache-Control": "no-cache",
         "Accept-Encoding": "gzip",

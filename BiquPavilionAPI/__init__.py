@@ -1,6 +1,6 @@
 import demjson
 
-from BiquPavilionAPI import HttpUtil
+from BiquPavilionAPI import HttpUtil, log
 
 
 def get(api_url: str, params: dict = None) -> [str, dict]:
@@ -8,7 +8,7 @@ def get(api_url: str, params: dict = None) -> [str, dict]:
     if response is not None:
         return demjson.decode(str(response.text))
     else:
-        print('[ERROR] response is None, api_url:', api_url)
+        print('[ERROR]', api_url)
 
 
 class Book:
