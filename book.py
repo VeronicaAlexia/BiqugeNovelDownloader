@@ -24,15 +24,12 @@ class Book:
         self.last_chapter = del_title(book_info.get('LastChapter'))
         self.pool_sema = threading.BoundedSemaphore(Vars.cfg.data.get('threading_pool_size'))
 
-    def del_nbsp(self, text: str) -> str:
-        return text.replace("&nbsp;", '').replace('&nbsp', '')
-
     def show_book_info(self) -> str:
         show_info = '作者:{0:<{2}}状态:{1}\n'.format(self.author_name, self.book_state, isCN(self.author_name))
         show_info += '最新:{0:<{2}}更新:{1}\n'.format(self.last_chapter, self.book_updated, isCN(self.last_chapter))
         self.config_book_dir = os.path.join(Vars.cfg.data.get('config_book'), self.book_name)
         self.save_book_dir = os.path.join(Vars.cfg.data.get('save_book'), self.book_name, f'{self.book_name}.txt')
-        write(self.save_book_dir, 'w', '{}简介:\n{}'.format(show_info, self.arrange(self.book_intro, intro=True)))
+        write(self.save_book_dir, 'w', '{}简介:\n{}'.format(show_info, self.arrange(self.book_intro)))
         makedirs(self.config_book_dir)
         return show_info
 
@@ -42,13 +39,23 @@ class Book:
         print('{}/{} 进度:{:^3.0f}%'.format(self.progress_bar, length, percentage), end='\r')
 
     def customized_content(self, volume_name: str, title: str, content: str, new_content: str = "") -> str:
-        if title != "该章节未审核通过":
+        if title != "该章节未审核通过" and "正在更新中，请稍等片刻，内容更新后" not in content:
             for line in content.splitlines():
                 content_line = line.strip().strip("　")
                 if content_line != "":
                     new_content += f"\n　　{content_line}"
             return "{}: {}\n{}".format(volume_name, self.del_nbsp(title), new_content)
         return ""
+
+    def arrange(self, intro: str, new_intro: str = "", width: int = 60) -> str:
+        for line in intro.splitlines():
+            intro_line = line.strip().strip("　")
+            if intro_line != "":
+                new_intro += "\n" + intro_line[:width]
+        return new_intro
+
+    def del_nbsp(self, text: str) -> str:
+        return text.replace("&nbsp;", '').replace('&nbsp', '')
 
     def download_content_threading(self, volume_name, chapter_info, download_length) -> None:
         self.pool_sema.acquire()
@@ -94,19 +101,3 @@ class Book:
         for thread in self.threading_pool:
             thread.join()
         self.threading_pool.clear()
-
-    def arrange(self, chapter_content: str, chapter_title: str = "", intro: bool = False):
-        content = ""
-        if intro is True:
-            for line in chapter_content.splitlines():
-                chapter_line = line.strip("　").strip()
-                if chapter_line != "":
-                    content += "\n" + chapter_line[:60]
-            return content
-        for line in chapter_content.splitlines():
-            chapter_line = line.strip("　").strip()
-            if chapter_line != "" and len(chapter_line) > 2:
-                if "http" in chapter_line:
-                    continue
-                content += "\n　　{}".format(chapter_line)
-        return f"{chapter_title}\n{content}"
