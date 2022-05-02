@@ -95,8 +95,8 @@ def shell(inputs: list):
 
 if __name__ == '__main__':
     setup_config()
-    BiquPavilionAPI.log.LogConfig("log.log").init_logger()
     agreed_read_readme()
+    BiquPavilionAPI.log.LogConfig("log.log").init_logger()
     if len(sys.argv) > 1:
         shell(sys.argv[1:])
     else:
